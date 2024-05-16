@@ -1,7 +1,7 @@
 #include <Arduino.h>
 
-const int nilai_X = 299; // 59
-const int nilai_Y = 50;  // 50
+const int nilai_X = 205; // 59
+const int nilai_Y = 100; // 50
 
 float Array_X[nilai_X];
 float Array_Y[nilai_Y];
@@ -14,17 +14,6 @@ int bagi = nilai_X / nilai_Y;
 void setup()
 {
   Serial.begin(9600);
-
-  for (int i = 0; i < sizeof(Array_X) / sizeof(Array_X[0]); i++) // Array X
-  {
-    Array_X[i] = i + 1;
-    //    sprintf(buffer, "array_x %d: %.ff\n", i, Array_X[i]);
-    //    Serial.print(buffer);
-    Serial.print("ARRAY_X ");
-    Serial.print(i);
-    Serial.print(":");
-    Serial.println(Array_X[i]);
-  }
 }
 
 void loop()
@@ -32,7 +21,7 @@ void loop()
   char buffer[100];
 
   // if(sisa>nilai_Y)
-
+  Serial.print(bagi);
   // if (bagi > 1)
   // {
   //   sisa = sisa + nilai_Y;
@@ -42,6 +31,13 @@ void loop()
   //   sisa=sisa;
   // }
 
+  for (int i = 0; i < sizeof(Array_X) / sizeof(Array_X[0]); i++) // Array X
+  {
+    Array_X[i] = i + 1;
+    sprintf(buffer, "array_x %d: %.2f\n", i, Array_X[i]);
+    Serial.print(buffer);
+  }
+
   for (int i = 0; i < sizeof(Array_Y) / sizeof(Array_Y[0]); i++) // Array Y
   {
     if (nilai_X < nilai_Y) // jika X < Y
@@ -49,76 +45,47 @@ void loop()
       for (int i = 0; i < sizeof(Array_X) / sizeof(Array_X[0]); i++)
       {
         Array_Y[i] = Array_X[i];
-        //        sprintf(buffer, "array_y %d: %.2f\n", i, Array_Y[i]);
-        //        Serial.print(buffer);
-
-        Serial.print("ARRAY_Y ");
-        Serial.print(i);
-        Serial.print(":");
-        Serial.println(Array_Y[i]);
+        sprintf(buffer, "array_y %d: %.2f\n", i, Array_Y[i]);
+        Serial.print(buffer);
       }
     }
     else // jika X > Y dan X = Y
     {
 
-      if (bagi > 4 && bagi < 6)
+      if (bagi > 4 && bagi < 7)
       {
         if (i < sisa)
         {
-          Array_Y[i] = (Array_X[i * 5] + Array_X[i * 5 + 1] + Array_X[i * 5 + 2] + Array_X[i * 5 + 3] + Array_X[i * 5 + 4] + Array_X[i * 5 + 5]) / 6;
-          Serial.print("Sisa :");
-          Serial.println(sisa);
+          Array_Y[i] = (Array_X[i * 5] + Array_X[i * 5 + 1] + Array_X[i * 5 + 2] + Array_X[i * 5 + 3] + Array_X[i * 5 + 3]) / 5;
         }
         else
         {
-          Array_Y[i] = (Array_X[i * 5 + sisa] + Array_X[i * 5 + 1 + sisa] + Array_X[i * 5 + 2 + sisa] + Array_X[i * 5 + 3 + sisa] + Array_X[i * 5 + 3 + sisa]) / 5;
+          Array_Y[i] = (Array_X[i * 4] + Array_X[i * 4 + 1] + Array_X[i * 4 + 2] + Array_X[i * 4 + 3]) / 4;
         }
-        Serial.print("bagi 5 ");
       }
 
-      else if (bagi > 3 && bagi < 5)
+      else if (bagi > 2 && bagi < 5)
       {
         if (i < sisa)
         {
-          Array_Y[i] = (Array_X[i * 4] + Array_X[i * 4 + 1] + Array_X[i * 4 + 2] + Array_X[i * 4 + 3] + Array_X[i * 4 + 3]) / 5;
-          Serial.print("Sisa :");
-          Serial.println(sisa);
+          Array_Y[i] = (Array_X[i * 4] + Array_X[i * 4 + 1] + Array_X[i * 4 + 2] + Array_X[i * 4 + 3]) / 4;
         }
         else
         {
-          Array_Y[i] = (Array_X[i * 4 + sisa] + Array_X[i * 4 + 1 + sisa] + Array_X[i * 4 + 2 + sisa] + Array_X[i * 4 + 3 + sisa]) / 4;
+          Array_Y[i] = (Array_X[i * 3] + Array_X[i * 3 + 1] + Array_X[i * 3 + 2]) / 3;
         }
-        // Serial.print("bagi:");
-        Serial.print(bagi);
-      }
-
-      else if (bagi > 2 && bagi < 4)
-      {
-        if (i < sisa)
-        {
-          Array_Y[i] = (Array_X[i * 3] + Array_X[i * 3 + 1] + Array_X[i * 3 + 2] + Array_X[i * 3 + 3]) / 4;
-        }
-        else
-        {
-          Array_Y[i] = (Array_X[i * 3 + sisa] + Array_X[i * 3 + 1 + sisa] + Array_X[i * 3 + 2 + sisa]) / 3;
-        }
-        Serial.println("__bagi 3");
       }
 
       else if (bagi > 1 && bagi < 3)
       {
         if (i < sisa)
         {
-          Array_Y[i] = (Array_X[i * 2] + Array_X[i * 2 + 1] + Array_X[i * 2 + 2]) / 3;
-          Serial.print("Sisa :");
-          Serial.println(sisa);
+          Array_Y[i] = (Array_X[i * 3] + Array_X[i * 3 + 1] + Array_X[i * 3 + 2]) / 3;
         }
         else
         {
-          Array_Y[i] = (Array_X[i * 2 + sisa] + Array_X[i * 2 + 1 + sisa]) / 2;
+          Array_Y[i] = (Array_X[i * 2] + Array_X[i * 2 + 1]) / 2;
         }
-        // Serial.println("__bagi 2");
-        Serial.print(bagi);
       }
       else if (bagi < 2)
       {
@@ -130,19 +97,9 @@ void loop()
         {
           Array_Y[i] = Array_X[i + sisa];
         }
-        // Serial.println("__bagi 1");
-        Serial.println(bagi);
       }
-      else
-      {
-        Serial.println("pembagi X dan Y terlalu banyak");
-      }
-      //      sprintf(buffer, "array_y %d: %.2f\n", i, Array_Y[i]);
-      //      Serial.print(buffer);
-      Serial.print("ARRAY_Y ");
-      Serial.print(i);
-      Serial.print(":");
-      Serial.println(Array_Y[i]);
+      sprintf(buffer, "array_y %d: %.2f\n", i, Array_Y[i]);
+      Serial.print(buffer);
     }
     delay(200);
   }
